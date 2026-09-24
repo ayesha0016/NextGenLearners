@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-darkBg: #0b0f17;
+  --color-cardBg: #131c2e;
+  --color-mintAccent: #00fa9a;
+  --color-mintHover: #00df88;
+}
+
+body {
+  background-color: #0b0f17;
+  color: #ffffff;
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Precise Sliding Border Beam */
+@keyframes slideBeam {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.sliding-border-btn {
+  position: relative;
+  border-radius: 9999px;
+  background: #131c2e;
+  border: 1px solid rgba(0, 250, 154, 0.2);
+  overflow: hidden;
+}
+
+.sliding-border-btn::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00fa9a, transparent);
+  animation: slideBeam 3s ease-in-out infinite;
+}
+
+/* Presentation Slide & Fade Keyframes */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
