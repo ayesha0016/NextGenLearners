@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ScrollReveal from './ScrollReveal';
 import WorkshopModal from './WorkshopModal';
 
-import Certificate1 from '../assets/images/certificate1.jpeg';
-
 export default function Workshops() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedWorkshop, setSelectedWorkshop] = useState('');
-  const [selectedCertificate, setSelectedCertificate] = useState(null);
   
   const [workshopsList, setWorkshopsList] = useState([]);
 
@@ -118,18 +115,6 @@ export default function Workshops() {
     }
   }, []);
 
-  const certificates = [
-    {
-      title: "AI FOR EVERYONE 2026 WORKSHOP",
-      issuer: "NextGen Learners",
-      date: "24 August 2026",
-      certId: "NGL-AI-2026-0001",
-      recipient: "Ayesha Fatima",
-      description: "Focused on exploring Artificial Intelligence, Generative AI, AI Tools, and Prompt Engineering, helping participants understand practical applications of AI.",
-      image: Certificate1
-    }
-  ];
-
   const handleJoinClick = (title) => {
     setSelectedWorkshop(title);
     setIsModalOpen(true);
@@ -225,79 +210,6 @@ export default function Workshops() {
           </ScrollReveal>
         ))}
       </div>
-
-      {/* Certificate Showcase Section */}
-      <ScrollReveal>
-        <div className="max-w-7xl mx-auto space-y-10 pt-10 border-t border-gray-800/80">
-          <div className="space-y-3">
-            <span className="text-mintAccent font-mono text-sm tracking-wider uppercase border border-mintAccent/30 px-3 py-1 rounded-md bg-mintAccent/5">
-              — ACCREDITATION & CREDENTIALS
-            </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-              Verified <span className="text-mintAccent">Certificates</span>
-            </h2>
-            <p className="text-gray-400 text-base max-w-xl">
-              Professional credentials earned through active participation and mastery in specialized workshops.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((cert, idx) => (
-              <div 
-                key={idx}
-                className="bg-cardBg border border-gray-800 rounded-3xl p-6 flex flex-col justify-between hover:border-mintAccent/50 transition-all duration-300 group relative overflow-hidden shadow-lg"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-mintAccent/5 rounded-full blur-2xl group-hover:bg-mintAccent/10 transition-all"></div>
-                
-                <div className="space-y-4 relative z-10">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono text-mintAccent bg-mintAccent/10 px-3 py-1 rounded-full border border-mintAccent/20">
-                      {cert.issuer}
-                    </span>
-                    <span className="text-xs text-gray-400 font-mono">{cert.date}</span>
-                  </div>
-
-                  {/* Certificate Preview Card Box */}
-                  <div className="rounded-2xl overflow-hidden border border-gray-700 bg-gray-900 group-hover:border-mintAccent/40 transition-all aspect-[1.4/1] relative flex items-center justify-center">
-                    {cert.image ? (
-                      <img src={cert.image} alt={cert.title} className="w-full h-full object-cover" />
-                    ) : (
-                      <div className="absolute inset-0 bg-gradient-to-tr from-darkBg via-gray-900 to-cardBg flex flex-col items-center justify-center text-center p-6 space-y-3">
-                        <div className="w-12 h-12 rounded-full bg-mintAccent/10 border border-mintAccent/30 flex items-center justify-center text-mintAccent text-xl shadow-[0_0_15px_rgba(0,250,154,0.3)]">
-                          📜
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-white text-base group-hover:text-mintAccent transition-colors">{cert.title}</h4>
-                          <p className="text-xs text-gray-400 mt-1">Presented to <span className="text-mintAccent font-semibold">{cert.recipient}</span></p>
-                        </div>
-                        <span className="text-[10px] font-mono text-gray-400 bg-black/40 px-2.5 py-1 rounded border border-gray-800">
-                          ID: {cert.certId}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="text-xs text-gray-400 leading-relaxed">
-                    {cert.description}
-                  </p>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-gray-800 flex items-center justify-between relative z-10">
-                  <span className="text-xs text-emerald-400 flex items-center gap-1 font-mono">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Verified
-                  </span>
-                  <button 
-                    onClick={() => setSelectedCertificate(cert)}
-                    className="text-xs bg-gray-800 hover:bg-mintAccent hover:text-darkBg text-white font-medium px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer"
-                  >
-                    View Certificate
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </ScrollReveal>
 
       {/* Interactive Feedback & Reviews Section */}
       <ScrollReveal>
@@ -437,46 +349,6 @@ export default function Workshops() {
           </div>
         </div>
       </ScrollReveal>
-
-      {/* Certificate Modal Preview */}
-      {selectedCertificate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-cardBg border border-gray-700 rounded-3xl max-w-4xl w-full p-6 md:p-8 relative space-y-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-gray-800 pb-4">
-              <div>
-                <span className="text-xs font-mono text-mintAccent">VERIFIED CREDENTIAL</span>
-                <h3 className="text-xl font-bold text-white">{selectedCertificate.title}</h3>
-              </div>
-              <button 
-                onClick={() => setSelectedCertificate(null)}
-                className="w-9 h-9 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center text-white text-sm transition-colors cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Modal Image Preview Container */}
-            <div className="bg-gray-950 border border-mintAccent/30 rounded-2xl overflow-hidden flex items-center justify-center">
-              {selectedCertificate.image ? (
-                <img src={selectedCertificate.image} alt={selectedCertificate.title} className="w-full h-auto object-contain max-h-[70vh]" />
-              ) : (
-                <div className="p-12 text-center space-y-4">
-                  <p className="text-sm text-gray-400">Image link not set in the certificate object. Add your image variable to the `image` field above.</p>
-                </div>
-              )}
-            </div>
-
-            <div className="flex justify-end gap-3 pt-2">
-              <button 
-                onClick={() => setSelectedCertificate(null)}
-                className="bg-gray-800 hover:bg-gray-700 text-white text-xs font-medium px-5 py-2.5 rounded-xl transition-colors cursor-pointer"
-              >
-                Close Preview
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Workshop Registration Modal */}
       <WorkshopModal 
