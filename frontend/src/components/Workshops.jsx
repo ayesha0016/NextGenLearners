@@ -292,7 +292,7 @@ export default function Workshops() {
                   <input 
                     type="text" 
                     required
-                    placeholder="e.g. Ayesha Fatima"
+                    placeholder="e.g. John Doe"
                     value={newFeedback.name}
                     onChange={(e) => setNewFeedback({...newFeedback, name: e.target.value})}
                     className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-mintAccent transition-colors"

@@ -55,8 +55,8 @@ export default function InternshipModal({ isOpen, onClose, preSelectedDomain }) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-[#111827] border border-gray-800 rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl relative">
+    <div className="modal-viewport fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+      <div className="modal-panel bg-[#111827] border border-gray-800 rounded-3xl p-6 md:p-8 w-full max-w-md shadow-2xl relative">
         
         {/* Close Button */}
         <button onClick={onClose} className="absolute top-5 right-5 text-gray-400 hover:text-white text-xl cursor-pointer">
@@ -87,7 +87,7 @@ export default function InternshipModal({ isOpen, onClose, preSelectedDomain }) 
               onChange={handleChange}
               required
               className="w-full bg-[#1f2937] border border-gray-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-mintAccent" 
-              placeholder="Ayesha Fatima" 
+              placeholder="John Doe" 
             />
           </div>
 

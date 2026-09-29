@@ -148,8 +148,8 @@ export default function Footer({ currentPage, setCurrentPage }) {
 
       {/* Admin Password Modal */}
       {showAdminPrompt && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-          <div className="bg-[#111827] border border-mintAccent/30 rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
+        <div className="modal-viewport fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="modal-panel bg-[#111827] border border-mintAccent/30 rounded-2xl p-6 w-full max-w-sm shadow-2xl relative">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-white font-bold text-lg flex items-center gap-2">
                 <span>🔒</span> Admin Access

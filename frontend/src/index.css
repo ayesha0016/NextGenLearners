@@ -7,11 +7,125 @@
   --color-mintHover: #00df88;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #0b0f17;
   color: #ffffff;
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+button,
+label,
+span {
+  overflow-wrap: anywhere;
+}
+
+input,
+select,
+textarea {
+  min-width: 0;
+}
+
+.modal-viewport {
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+}
+
+.modal-panel {
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 640px) {
+  .modal-panel {
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+  }
+
+  .mobile-stack-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .mobile-stack-actions > * {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .mentor-dashboard {
+    display: block;
+    overflow: visible;
+  }
+
+  .mentor-sidebar {
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid #131d2e;
+  }
+
+  .mentor-sidebar > div:first-child {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .mentor-sidebar .px-3.py-2 {
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+  }
+
+  .mentor-sidebar nav {
+    display: flex;
+    gap: 0.5rem;
+    min-width: max-content;
+  }
+
+  .mentor-sidebar nav button {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .mentor-sidebar > div:last-child {
+    display: none;
+  }
+
+  .mentor-main {
+    overflow: visible;
+  }
 }
 
 /* Precise Sliding Border Beam */

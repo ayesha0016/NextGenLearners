@@ -69,7 +69,7 @@ export default function Enrollment() {
               onChange={handleChange}
               required
               className="w-full bg-[#1f2937] border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-mintAccent" 
-              placeholder="Ayesha Siddiqui" 
+              placeholder="John Doe" 
             />
           </div>
 

@@ -96,9 +96,9 @@ export default function MentorDashboard({ onSignOut }) {
   const initials = user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'ME';
 
   return (
-    <div className="flex h-screen bg-[#07090e] text-gray-100 font-sans overflow-hidden">
+    <div className="mentor-dashboard flex min-h-screen bg-[#07090e] text-gray-100 font-sans overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#0b0f17] border-r border-[#131d2e] flex flex-col justify-between select-none">
+      <aside className="mentor-sidebar w-64 shrink-0 bg-[#0b0f17] border-r border-[#131d2e] flex flex-col justify-between select-none">
         <div>
           {/* Logo Brand */}
           <div className="p-5 flex items-center gap-3 border-b border-[#131d2e]">
@@ -171,9 +171,9 @@ export default function MentorDashboard({ onSignOut }) {
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#07090e]">
+      <div className="mentor-main flex-1 flex flex-col min-w-0 overflow-y-auto bg-[#07090e]">
         {/* Top Header */}
-        <header className="h-16 border-b border-[#131d2e] bg-[#0b0f17]/85 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-20">
+        <header className="h-16 border-b border-[#131d2e] bg-[#0b0f17]/85 backdrop-blur-md px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
           <div className="flex items-center gap-2 text-xs text-gray-400">
             <span className="font-semibold text-gray-200 capitalize">Mentor Workspace / {activeTab}</span>
           </div>
@@ -188,7 +188,7 @@ export default function MentorDashboard({ onSignOut }) {
         </header>
 
         {/* Dynamic Views */}
-        <main className="p-8 max-w-7xl w-full mx-auto space-y-6">
+        <main className="p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-6">
           
           {activeTab === 'overview' && (
             <>
