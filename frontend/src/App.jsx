@@ -18,12 +18,13 @@ import Enrollment from './components/Enrollment';
 import InternDashboard from './components/InternDashboard'; 
 import MentorDashboard from './components/MentorDashboard'; 
 import AdminPortal from './components/AdminPortal'; 
+import AuthModal from './components/AuthModal'; // Import your AuthModal component
 
-// HomePage sections wrapped with ScrollReveal
-function HomePage() {
+// HomePage sections wrapped with ScrollReveal, accepting onOpenAuth for the Hero component
+function HomePage({ setCurrentPage, onOpenAuth }) {
   return (
     <>
-      <Hero />
+      <Hero setCurrentPage={setCurrentPage} onOpenAuth={onOpenAuth} />
 
       <ScrollReveal>
         <InternshipDomains />
@@ -49,10 +50,20 @@ export default function App() {
   // Track a state counter or toggle to force App.jsx to re-evaluate localstorage when page changes
   const [sessionKey, setSessionKey] = useState(0);
 
+  // States for the Global Auth Modal
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
+
+  const handleOpenAuth = (mode = 'signup') => {
+    setAuthMode(mode);
+    setIsAuthOpen(true);
+  };
+
   // Custom wrapper for setCurrentPage so any navigation or login redirection forces App re-render
   const handlePageChange = (page) => {
     setSessionKey(prev => prev + 1);
     setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const getUserRole = () => {
@@ -77,7 +88,7 @@ export default function App() {
       <div className="w-full flex-grow">
         <Navbar currentPage={currentPage} setCurrentPage={handlePageChange} />
 
-        {currentPage === 'home' && <HomePage />}
+        {currentPage === 'home' && <HomePage setCurrentPage={handlePageChange} onOpenAuth={handleOpenAuth} />}
         {currentPage === 'courses' && <Courses setCurrentPage={handlePageChange} />}
         {currentPage === 'internships' && <Internships setCurrentPage={handlePageChange} />}
         {currentPage === 'workshops' && <Workshops />}
@@ -98,6 +109,14 @@ export default function App() {
         
         {currentPage === 'admin' && <AdminPortal setCurrentPage={handlePageChange} />}
       </div>
+
+      {/* Global Authentication Modal Component */}
+      <AuthModal 
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        initialMode={authMode}
+        setCurrentPage={handlePageChange}
+      />
 
       {/* Footer Rendered at the Bottom with Props */}
       <Footer currentPage={currentPage} setCurrentPage={handlePageChange} />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Hero({ setCurrentPage }) {
+export default function Hero({ setCurrentPage, onOpenAuth }) {
   return (
     <section className="relative bg-darkBg text-white py-20 px-6 md:px-16 overflow-hidden">
       {/* Background glow effect matching your mint accent */}
@@ -31,7 +31,14 @@ export default function Hero({ setCurrentPage }) {
           {/* Buttons Container */}
           <div className="flex flex-wrap gap-4 pt-4 items-center opacity-0 animate-[slideUp_0.9s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
             <button 
-              onClick={() => { setCurrentPage('courses'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              onClick={() => {
+                if (onOpenAuth) {
+                  onOpenAuth('signup');
+                } else {
+                  setCurrentPage('courses'); 
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className="bg-mintAccent text-darkBg font-semibold px-7 py-3.5 rounded-full hover:bg-mintHover transition-all duration-300 shadow-lg shadow-mintAccent/20 flex items-center gap-2 cursor-pointer transform hover:-translate-y-0.5"
             >
               Start learning free →
@@ -48,7 +55,7 @@ export default function Hero({ setCurrentPage }) {
         </div>
 
         {/* Right Column: Interactive Code Editor Mockup with Entry Animation */}
-        <div className="relative z-10 flex justify-center opacity-0 animate-[slideUp_1s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
+        <div className="relative z-15 flex justify-center opacity-0 animate-[slideUp_1s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
           <div className="w-full max-w-lg bg-cardBg border border-gray-800 rounded-2xl shadow-2xl p-4 overflow-hidden transition-transform duration-500 hover:scale-[1.02]">
             {/* Window Header */}
             <div className="flex items-center space-x-2 pb-4 border-b border-gray-800">
