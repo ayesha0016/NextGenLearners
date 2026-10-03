@@ -12,19 +12,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Static uploads folder serve karna taake screenshots browser par dekh sakay
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Use Vercel's writable /tmp directory in production, local uploads folder otherwise
+const uploadDir = process.env.NODE_ENV === 'production' ? '/tmp/uploads' : path.join(__dirname, 'uploads');
 
-// Uploads folder check karo, agar nahi hai toh create kar lo
-const uploadDir = './uploads';
 if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+  fs.mkdirSync(uploadDir, { recursive: true });
 }
+
+// Serve static uploads folder
+app.use('/uploads', express.static(uploadDir));
 
 // Multer storage configuration for payment screenshots
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -37,20 +38,27 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 } // Limit: 5MB max size
 });
 
-// MySQL Database Connection Pool
+// Aiven Live MySQL Database Connection Pool (with SSL & Port configuration)
 const db = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'nextgen_db'
+  host: process.env.Host,
+  user: process.env.User,
+  password: process.env.Password,
+  database: process.env.DB_Name,
+  port: process.env.Port,
+  ssl: {
+    rejectUnauthorized: false // Required for Aiven SSL handshake
+  },
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 // Test Database Connection
 db.getConnection((err, connection) => {
   if (err) {
-    console.error('Database connection failed:', err);
+    console.error('❌ Error connecting to Aiven MySQL database:', err.message);
   } else {
-    console.log('Connected to MySQL Database successfully!');
+    console.log('✅ Connected successfully to live Aiven MySQL database!');
     connection.release();
   }
 });
@@ -250,7 +258,6 @@ app.get('/api/mentors/domain/:domain', (req, res) => {
   db.query(query, [domain], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     if (results.length === 0) {
-      // Fallback to any mentor if exact domain match not found
       db.query("SELECT id, full_name AS name, email, domain FROM users WHERE role = 'mentor' LIMIT 1", (err2, results2) => {
         if (err2 || results2.length === 0) return res.status(404).json({ error: 'No mentor found' });
         return res.json({ mentor: results2[0] });
@@ -301,17 +308,29 @@ app.put('/api/submissions/evaluate/:subId', (req, res) => {
 
   const query = `
     UPDATE task_submissions 
+    RANK_POINTS = ?, feedback = ?, status = ? 
+    WHERE id = ?
+  `; // wait, keeping user's exact query format below:
+
+  const actualQuery = `
+    UPDATE task_submissions 
     SET rank_points = ?, feedback = ?, status = ? 
     WHERE id = ?
   `;
 
-  db.query(query, [rankPoints || 0, feedback || '', status || 'Reviewed', subId], (err, result) => {
+  db.query(actualQuery, [rankPoints || 0, feedback || '', status || 'Reviewed', subId], (err, result) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ success: true, message: 'Submission evaluated and points awarded successfully!' });
   });
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+// Only listen locally, export app for Vercel serverless runtime
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
