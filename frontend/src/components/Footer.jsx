@@ -22,7 +22,7 @@ export default function Footer({ currentPage, setCurrentPage }) {
   const handleAdminLogin = (e) => {
     e.preventDefault();
     // Replace 'your_secure_password_here' with your actual secret password
-    if (adminPassword === 'f@t!m@2712') {
+    if (adminPassword === 'nextgenadmin2712') {
       setShowAdminPrompt(false);
       setAdminPassword('');
       setError(false);

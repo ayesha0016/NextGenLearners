@@ -154,7 +154,7 @@ export default function Contact() {
                 <span>📧</span> Email
               </div>
               <p className="text-mintAccent font-medium text-base pt-1">
-                hello@nextgenlearners.dev
+                nextgenlearners.official@gmail.com
               </p>
             </div>
 
@@ -164,7 +164,7 @@ export default function Contact() {
                 <span>📞</span> Phone
               </div>
               <p className="text-mintAccent font-medium text-base pt-1">
-                +92 300 0000000
+                +92 316 0829910
               </p>
             </div>
 
@@ -174,7 +174,7 @@ export default function Contact() {
                 <span>📍</span> Location
               </div>
               <p className="text-gray-300 font-medium text-sm pt-1 leading-relaxed">
-                Sukkur, Sindh, Pakistan — cohorts run fully online.
+                Run fully online.
               </p>
             </div>
 
