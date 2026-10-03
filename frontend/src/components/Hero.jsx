@@ -51,6 +51,14 @@ export default function Hero({ setCurrentPage, onOpenAuth }) {
             >
               Browse courses
             </button>
+
+            {/* See all services button */}
+            <button 
+              onClick={() => { setCurrentPage('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="text-gray-300 hover:text-mintAccent font-semibold px-5 py-3.5 rounded-full border border-gray-700 hover:border-mintAccent/40 transition-all duration-300 flex items-center gap-2 cursor-pointer bg-cardBg/50"
+            >
+              See all services →
+            </button>
           </div>
         </div>
 
