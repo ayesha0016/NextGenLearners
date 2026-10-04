@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function WhyNextGen() {
+export default function WhyNextGen({ setCurrentPage }) {
   const features = [
     "Live mentor-led sessions, not pre-recorded playlists",
     "Every course ends with a portfolio-ready capstone project",
@@ -59,11 +59,13 @@ export default function WhyNextGen() {
           </ul>
 
           {/* Updated Button with Sliding Border Beam Effect */}
-          <div className="pt-4">
-            <button className="sliding-border-btn relative px-7 py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-300 flex items-center justify-center cursor-pointer">
+           {/* See all services button */}
+            <button 
+              onClick={() => { setCurrentPage('services'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="text-gray-300 hover:text-mintAccent font-semibold px-5 py-3.5 rounded-full border border-gray-700 hover:border-mintAccent/40 transition-all duration-300 flex items-center gap-2 cursor-pointer bg-cardBg/50"
+            >
               See all services →
             </button>
-          </div>
         </div>
 
         {/* Right Column: Roadmap Window (Clean Dark Look) */}

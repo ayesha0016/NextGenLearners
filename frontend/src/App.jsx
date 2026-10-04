@@ -31,7 +31,7 @@ function HomePage({ setCurrentPage, onOpenAuth }) {
       </ScrollReveal>
 
       <ScrollReveal>
-        <WhyNextGen />
+        <WhyNextGen setCurrentPage={setCurrentPage} />
       </ScrollReveal>
 
       <ScrollReveal>
