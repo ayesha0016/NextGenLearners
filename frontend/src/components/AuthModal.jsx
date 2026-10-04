@@ -31,7 +31,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
     setMessage('');
     setError('');
 
-    const endpoint = isLogin ? 'http://localhost:5000/api/login' : 'http://localhost:5000/api/signup';
+    // Updated to use relative paths for Vercel production compatibility
+    const endpoint = isLogin ? '/api/login' : '/api/signup';
     
     const bodyData = isLogin 
       ? { email: formData.email, password: formData.password, role: selectedRole }
@@ -80,7 +81,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
       } else {
         setMessage('Account created successfully! Logging you in...');
         
-        const loginRes = await fetch('http://localhost:5000/api/login', {
+        const loginRes = await fetch('/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email, password: formData.password, role: selectedRole })
