@@ -22,6 +22,9 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
 
   if (!isOpen) return null;
 
+  // Automatically detects your live backend URL on Vercel or defaults to localhost for development
+  const API_BASE_URL = process.env.REACT_APP_API_URL || process.env.VITE_API_URL || 'http://localhost:5000';
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -31,8 +34,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
     setMessage('');
     setError('');
 
-    // Updated to use relative paths for Vercel production compatibility
-    const endpoint = isLogin ? '/api/login' : '/api/signup';
+    const endpoint = isLogin ? `${API_BASE_URL}/api/login` : `${API_BASE_URL}/api/signup`;
     
     const bodyData = isLogin 
       ? { email: formData.email, password: formData.password, role: selectedRole }
@@ -57,7 +59,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
       }
 
       if (isLogin) {
-        // FORCE the selectedRole to take precedence so whatever you click in the modal is strictly honored
         const verifiedRole = selectedRole.toLowerCase();
 
         localStorage.setItem('token', data.token);
@@ -81,7 +82,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
       } else {
         setMessage('Account created successfully! Logging you in...');
         
-        const loginRes = await fetch('/api/login', {
+        const loginRes = await fetch(`${API_BASE_URL}/api/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email, password: formData.password, role: selectedRole })
