@@ -85,9 +85,7 @@ export default function InternshipDomains() {
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-gray-800/50 flex items-center text-xs font-semibold text-gray-400 group-hover:text-mintAccent transition-colors">
-                Explore track →
-              </div>
+              
             </div>
           ))}
         </div>
