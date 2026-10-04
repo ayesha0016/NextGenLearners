@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function InternshipDomains() {
+export default function InternshipDomains({ onExploreTrack }) {
   const tracks = [
     {
       title: "Web Development",
@@ -85,7 +85,13 @@ export default function InternshipDomains() {
                 </p>
               </div>
 
-              
+              <button
+                type="button"
+                onClick={() => onExploreTrack(`${track.title} Internship`)}
+                className="mt-6 pt-4 border-t border-gray-800/50 flex items-center text-xs font-semibold text-gray-400 group-hover:text-mintAccent transition-colors cursor-pointer"
+              >
+                Explore track →
+              </button>
             </div>
           ))}
         </div>

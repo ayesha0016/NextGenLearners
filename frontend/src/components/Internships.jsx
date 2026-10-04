@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ScrollReveal from './ScrollReveal';
 import InternshipModal from './InternshipModal';
 
-export default function Internships() {
+export default function Internships({ selectedDomain: initialSelectedDomain }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDomain, setSelectedDomain] = useState('Web Development Internship');
+  const [selectedDomain, setSelectedDomain] = useState(initialSelectedDomain || 'Web Development Internship');
   const [internshipTracks, setInternshipTracks] = useState([]);
 
   // Initialize feedback list, loading from localStorage if available
@@ -159,6 +159,10 @@ export default function Internships() {
     setMyFeedbackIds(myFeedbackIds.filter(feedbackId => feedbackId !== id));
   };
 
+  const visibleInternshipTracks = initialSelectedDomain
+    ? internshipTracks.filter(track => track.title === initialSelectedDomain)
+    : internshipTracks;
+
   return (
     <div className="min-h-screen bg-darkBg text-white py-16 px-6 md:px-16 space-y-24">
       
@@ -179,7 +183,7 @@ export default function Internships() {
 
       {/* Tracks Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
-        {internshipTracks.map((track, idx) => (
+        {visibleInternshipTracks.map((track, idx) => (
           <ScrollReveal key={idx}>
             <div className="bg-cardBg border border-gray-800 rounded-2xl p-8 hover:border-mintAccent/40 transition-all duration-300 flex flex-col justify-between h-full group">
               <div className="space-y-4">

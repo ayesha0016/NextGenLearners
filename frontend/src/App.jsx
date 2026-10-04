@@ -21,13 +21,13 @@ import AdminPortal from './components/AdminPortal';
 import AuthModal from './components/AuthModal'; // Import your AuthModal component
 
 // HomePage sections wrapped with ScrollReveal, accepting onOpenAuth for the Hero component
-function HomePage({ setCurrentPage, onOpenAuth }) {
+function HomePage({ setCurrentPage, onOpenAuth, onExploreTrack }) {
   return (
     <>
       <Hero setCurrentPage={setCurrentPage} onOpenAuth={onOpenAuth} />
 
       <ScrollReveal>
-        <InternshipDomains />
+        <InternshipDomains onExploreTrack={onExploreTrack} />
       </ScrollReveal>
 
       <ScrollReveal>
@@ -47,6 +47,7 @@ function HomePage({ setCurrentPage, onOpenAuth }) {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [selectedInternshipDomain, setSelectedInternshipDomain] = useState(null);
   // Track a state counter or toggle to force App.jsx to re-evaluate localstorage when page changes
   const [sessionKey, setSessionKey] = useState(0);
 
@@ -61,8 +62,16 @@ export default function App() {
 
   // Custom wrapper for setCurrentPage so any navigation or login redirection forces App re-render
   const handlePageChange = (page) => {
+    setSelectedInternshipDomain(null);
     setSessionKey(prev => prev + 1);
     setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleExploreTrack = (domain) => {
+    setSelectedInternshipDomain(domain);
+    setSessionKey(prev => prev + 1);
+    setCurrentPage('internships');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -88,9 +97,9 @@ export default function App() {
       <div className="w-full flex-grow">
         <Navbar currentPage={currentPage} setCurrentPage={handlePageChange} />
 
-        {currentPage === 'home' && <HomePage setCurrentPage={handlePageChange} onOpenAuth={handleOpenAuth} />}
+        {currentPage === 'home' && <HomePage setCurrentPage={handlePageChange} onOpenAuth={handleOpenAuth} onExploreTrack={handleExploreTrack} />}
         {currentPage === 'courses' && <Courses setCurrentPage={handlePageChange} />}
-        {currentPage === 'internships' && <Internships setCurrentPage={handlePageChange} />}
+        {currentPage === 'internships' && <Internships setCurrentPage={handlePageChange} selectedDomain={selectedInternshipDomain} />}
         {currentPage === 'workshops' && <Workshops />}
         {currentPage === 'services' && <Services setCurrentPage={handlePageChange} />}
         {currentPage === 'projects' && <Projects />}
