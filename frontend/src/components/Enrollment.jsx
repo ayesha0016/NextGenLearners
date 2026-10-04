@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_URL } from '../config'; // Make sure the path matches your folder structure
 
 export default function Enrollment() {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ export default function Enrollment() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/signup', {
+      const response = await fetch(`${API_URL}/api/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

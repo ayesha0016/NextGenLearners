@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config'; // Make sure the path matches your folder structure (e.g., './config' if it's in the same folder)
 
 export default function InternDashboard({ setCurrentPage }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -22,11 +23,11 @@ export default function InternDashboard({ setCurrentPage }) {
     const fetchInternData = async () => {
       try {
         // Fetch mentor assigned to intern's domain
-        const mentorRes = await axios.get(`http://localhost:5000/api/mentors/domain/${user.domain || 'Web Development'}`);
+        const mentorRes = await axios.get(`${API_URL}/api/mentors/domain/${user.domain || 'Web Development'}`);
         setAssignedMentor(mentorRes.data.mentor);
 
         // Fetch submissions history to show live status & rank points
-        const subRes = await axios.get(`http://localhost:5000/api/submissions/intern/${user.id}`);
+        const subRes = await axios.get(`${API_URL}/api/submissions/intern/${user.id}`);
         setSubmissionsHistory(subRes.data.submissions || []);
       } catch (error) {
         console.error('Error fetching intern data:', error);
@@ -53,7 +54,7 @@ export default function InternDashboard({ setCurrentPage }) {
     const taskObj = tasks.find(t => t.id === Number(selectedTask));
 
     try {
-      const response = await axios.post('http://localhost:5000/api/submissions', {
+      const response = await axios.post(`${API_URL}/api/submissions`, {
         userId: user.id || null,
         internName: user.name || 'Intern',
         domain: user.domain,
@@ -73,7 +74,7 @@ export default function InternDashboard({ setCurrentPage }) {
       setSelectedTask('');
 
       // Refresh history
-      const subRes = await axios.get(`http://localhost:5000/api/submissions/intern/${user.id}`);
+      const subRes = await axios.get(`${API_URL}/api/submissions/intern/${user.id}`);
       setSubmissionsHistory(subRes.data.submissions || []);
 
     } catch (error) {

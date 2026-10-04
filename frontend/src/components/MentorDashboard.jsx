@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import Hero from './Hero';
 import axios from 'axios';
+import { API_URL } from '../config'; // Make sure the path matches your folder structure
 
 export default function MentorDashboard({ onSignOut }) {
   const [activeTab, setActiveTab] = useState('overview');
@@ -47,14 +48,14 @@ export default function MentorDashboard({ onSignOut }) {
   const fetchMentorData = async (mentorId, domain) => {
     try {
       // Fetch submissions targeted for this mentor
-      const subRes = await axios.get(`http://localhost:5000/api/submissions/mentor/${mentorId}`);
+      const subRes = await axios.get(`${API_URL}/api/submissions/mentor/${mentorId}`);
       const allSubs = subRes.data.submissions || [];
       
       setPendingSubmissions(allSubs.filter(s => s.status === 'Pending'));
       setReviewedSubmissions(allSubs.filter(s => s.status === 'Reviewed'));
 
       // Fetch domain specific mentees registered under this mentor's domain
-      const menteesRes = await axios.get(`http://localhost:5000/api/interns/domain/${domain || 'Web Development'}`);
+      const menteesRes = await axios.get(`${API_URL}/api/interns/domain/${domain || 'Web Development'}`);
       setMentees(menteesRes.data.interns || []);
     } catch (err) {
       console.error("Error fetching mentor workspace data:", err);
@@ -63,7 +64,7 @@ export default function MentorDashboard({ onSignOut }) {
 
   const handleEvaluateSubmission = async (subId) => {
     try {
-      await axios.put(`http://localhost:5000/api/submissions/evaluate/${subId}`, {
+      await axios.put(`${API_URL}/api/submissions/evaluate/${subId}`, {
         rankPoints: Number(rankPoints),
         feedback: feedback,
         status: 'Reviewed'
