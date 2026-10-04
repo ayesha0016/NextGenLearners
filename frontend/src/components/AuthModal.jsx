@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../config'; // Import your central config
 
 export default function AuthModal({ isOpen, onClose, initialMode = 'login', setCurrentPage }) {
   const [isLogin, setIsLogin] = useState(initialMode === 'login');
@@ -22,9 +23,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
 
   if (!isOpen) return null;
 
-  // Automatically detects your live backend URL on Vercel or defaults to localhost for development
-  const API_BASE_URL = process.env.REACT_APP_API_URL || process.env.VITE_API_URL || 'http://localhost:5000';
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -34,7 +32,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
     setMessage('');
     setError('');
 
-    const endpoint = isLogin ? `${API_BASE_URL}/api/login` : `${API_BASE_URL}/api/signup`;
+    const endpoint = isLogin ? `${API_URL}/api/login` : `${API_URL}/api/signup`;
     
     const bodyData = isLogin 
       ? { email: formData.email, password: formData.password, role: selectedRole }
@@ -82,7 +80,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login', setC
       } else {
         setMessage('Account created successfully! Logging you in...');
         
-        const loginRes = await fetch(`${API_BASE_URL}/api/login`, {
+        const loginRes = await fetch(`${API_URL}/api/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: formData.email, password: formData.password, role: selectedRole })
