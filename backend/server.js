@@ -63,6 +63,11 @@ db.getConnection((err, connection) => {
   }
 });
 
+// Test route to verify backend is live
+app.get('/', (req, res) => {
+  res.json({ status: 'Success', message: 'NextGen Learners Backend is live and running!' });
+});
+
 // Signup Endpoint (Updated to support role and domain)
 app.post('/api/signup', async (req, res) => {
   const { fullName, email, phone, password, role, domain } = req.body;
@@ -305,12 +310,6 @@ app.get('/api/interns/domain/:domain', (req, res) => {
 app.put('/api/submissions/evaluate/:subId', (req, res) => {
   const { subId } = req.params;
   const { rankPoints, feedback, status } = req.body;
-
-  const query = `
-    UPDATE task_submissions 
-    RANK_POINTS = ?, feedback = ?, status = ? 
-    WHERE id = ?
-  `; // wait, keeping user's exact query format below:
 
   const actualQuery = `
     UPDATE task_submissions 
